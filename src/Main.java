@@ -8,13 +8,17 @@ public class Main {
     int opcion;
     ArrayList<Cliente> clientes = new ArrayList<>();
     ArrayList<Cliente> productos = new ArrayList<>();
+    ClienteController clienteController = new ClienteController();
+    ProductoController productoController = new ProductoController();
     do {
         mostrarMenu();
         opcion = sn.nextInt();
         switch (opcion){
             case 1:
+                clienteController.altaCliente();
                 break;
             case 2:
+                productoController.altaProducto();
                 break;
             case 3:
                 System.out.println("Has elegido salir");
@@ -29,34 +33,5 @@ public class Main {
         System.out.println("1.  Crear nuevo cliente");
         System.out.println("2.  Crear nuevo producto");
         System.out.println("3.  Salir");
-    }
-
-    private static void altaCliente(ArrayList<Cliente> clientes){
-        Scanner sc = new Scanner(System.in);
-        Scanner sn = new Scanner(System.in);
-        Cliente cliente = new Cliente();
-        System.out.println("Dime el código del cliente: ");
-        cliente.setCod_cli(sn.nextInt());
-        System.out.println("Dime el nombre del cliente: ");
-        cliente.setNombre(sc.nextLine());
-        System.out.println("Dime la direccion del cliente: ");
-        cliente.setDireccion(sc.nextLine());
-        System.out.println("Dime el teléfono del cliente: ");
-        cliente.setTelefono(sc.nextLine());
-        System.out.println("Dime el NIF del cliente: ");
-        cliente.setNif(sc.nextLine());
-        clientes.add(cliente);
-    }
-    private static void altaProducto(ArrayList<Producto> productos){
-        Scanner sc = new Scanner(System.in);
-        Scanner sn = new Scanner(System.in);
-        Producto producto = new Producto();
-        System.out.println("Dime el código del producto: ");
-        producto.setCod_prod(sn.nextInt());
-        System.out.println("Dime la descripcion del producto: ");
-        producto.setDescripcion(sc.nextLine());
-        System.out.println("Dime el importe del producto: ");
-        producto.setImporte(sn.nextInt());
-        productos.add(producto);
     }
 }
