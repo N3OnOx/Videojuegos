@@ -841,31 +841,31 @@
     </table>
     <column id="214" parent="210" name="cod_cli">
       <Position>1</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="215" parent="210" name="nombre">
       <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="216" parent="210" name="direccion">
       <Position>3</Position>
-      <DataType>varchar(40)|0s</DataType>
+      <DataType>varchar(40) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="217" parent="210" name="telefono">
       <Position>4</Position>
-      <DataType>varchar(10)|0s</DataType>
+      <DataType>varchar(10) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="218" parent="210" name="nif">
       <Position>5</Position>
-      <DataType>varchar(9)|0s</DataType>
+      <DataType>varchar(9) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -876,25 +876,25 @@
     </key>
     <column id="220" parent="211" name="cod_factura">
       <Position>1</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="221" parent="211" name="cod_cli">
       <Position>2</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="222" parent="211" name="fecha">
       <Position>3</Position>
-      <DataType>varchar(8)|0s</DataType>
+      <DataType>varchar(8) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="223" parent="211" name="importe">
       <Position>4</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -905,25 +905,25 @@
     </key>
     <column id="225" parent="212" name="cod_lfactura">
       <Position>1</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="226" parent="212" name="cod_factura">
       <Position>2</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="227" parent="212" name="importe">
       <Position>3</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="228" parent="212" name="cod_prod">
       <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>int(11) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -935,19 +935,19 @@ cod_factura</ColNames>
     </key>
     <column id="230" parent="213" name="cod_prod">
       <Position>1</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="231" parent="213" name="descripcion">
       <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>varchar(20) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="232" parent="213" name="importe">
       <Position>3</Position>
-      <DataType>int(4)|0s</DataType>
+      <DataType>int(4) |0s|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
