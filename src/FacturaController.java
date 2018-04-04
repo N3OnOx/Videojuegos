@@ -21,19 +21,20 @@ public class FacturaController {
         Scanner sc = new Scanner(System.in);
         ArrayList<LFactura> lineas = new ArrayList<>();
         int codigo;
-        String resp = "";
+        String resp;
         boolean checkProd = false;
         boolean checkCodLF = false;
         int importeTotal = 0;
-        int codFactura = 0;
+        int codFactura;
         System.out.println("Dime el codigo de factura: ");
         codFactura = sn.nextInt();
+        if (!facturacontroller.existeFactura(codFactura)) {
             do {
                 LFactura lFactura = new LFactura();
                 lFactura.setCod_factura(codFactura);
                 System.out.println("Dime el codigo de producto: ");
                 codigo = sn.nextInt();
-                if (facturacontroller.existeProducto(codigo)){
+                if (facturacontroller.existeProducto(codigo)) {
                     lFactura.setCod_prod(codigo);
                     checkProd = true;
                 }
@@ -45,13 +46,17 @@ public class FacturaController {
                     }
                     if (checkCodLF) {
                         lFactura.setCod_lfactura(codigo);
-                        System.out.println("Dime el importe: ");
-                        lFactura.setImporte(sn.nextInt());
+                        //System.out.println("Dime el importe: ");
+                        //lFactura.setImporte(sn.nextInt());
+                        codigo = facturacontroller.buscarImporte(lFactura.getCod_prod());
+                        lFactura.setImporte(codigo);
                         lineas.add(lFactura);
                         this.facturacontroller.insertarLFactura(lFactura);
                     } else {
                         System.out.println("La linea de factura ya existe");
                     }
+                }else{
+                    System.out.println("No existe ningun producto con ese código");
                 }
                 System.out.println("Desea introducir mas productos?");
                 resp = sc.nextLine();
@@ -61,7 +66,7 @@ public class FacturaController {
             factura.setCod_factura(codFactura);
             System.out.println("Dime el codigo de cliente:");
             codigo = sn.nextInt();
-            if (facturacontroller.existeCliente(codigo)){
+            if (facturacontroller.existeCliente(codigo)) {
                 factura.setCod_cli(codigo);
                 System.out.println("Dime la fecha de la factura: ");
                 factura.setFecha(sc.nextLine());
@@ -70,9 +75,11 @@ public class FacturaController {
                 }
                 factura.setImporte(importeTotal);
                 this.facturacontroller.realizarVenta(factura);
-            }else {
+            } else {
                 System.out.println("No existe el cliente");
             }
-
+        }else{
+            System.out.println("Ya existe ese código de factura");
+        }
     }
 }

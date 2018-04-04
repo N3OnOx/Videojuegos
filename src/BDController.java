@@ -5,15 +5,19 @@ public class BDController {
     private PreparedStatement existeCliente;
     private PreparedStatement existeProducto;
     private PreparedStatement existeLfactura;
+    private PreparedStatement existeFactura;
     BDController(){
         try {
-            this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
+            //this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
+            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/videojuegos", "root","");
             String SQLExisteCliente = "SELECT * from clientes where cod_cli = ?";
             this.existeCliente = conexion.prepareStatement(SQLExisteCliente);
             String SQLExisteProducto = "SELECT * from productos where cod_prod = ?";
             this.existeProducto = conexion.prepareStatement(SQLExisteProducto);
             String SQLExisteLfactura = "SELECT * from lfactura where cod_lfactura = ?";
             this.existeLfactura = conexion.prepareStatement(SQLExisteLfactura);
+            String SQLExisteFactura = "SELECT * from facturas where cod_factura = ?";
+            this.existeFactura = conexion.prepareStatement(SQLExisteFactura);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -53,7 +57,6 @@ public class BDController {
     public void realizarVenta(Factura factura){
         String insert ="INSERT INTO facturas VALUES(\'" + factura.getCod_factura() + "\',\'" + factura.getCod_cli() + "\',\'" + factura.getFecha() + "\',\'" + factura.getImporte() + "\');";
         try {
-            System.out.println("---");
             Statement myStatement = this.conexion.createStatement();
             myStatement.executeUpdate(insert);
             myStatement.close();
@@ -62,10 +65,23 @@ public class BDController {
         }
     }
 
-    public void insertarLFactura(LFactura lFactura){
-        String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";
+    public int buscarImporte(int codigo){
+        int importe = 0;
         try {
-            System.out.println("----");
+            Statement miStatement = this.conexion.createStatement();
+            ResultSet rs = miStatement.executeQuery("SELECT importe FROM productos where cod_prod=" + codigo + "");
+            while (rs.next()){
+                importe = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return importe;
+    }
+
+    public void insertarLFactura(LFactura lFactura){
+        String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getCod_prod() + "\',\'" + lFactura.getImporte() + "\');";
+        try {
             Statement myStatement = this.conexion.createStatement();
             myStatement.executeUpdate(insert);
             myStatement.close();
@@ -77,9 +93,25 @@ public class BDController {
     public boolean existeLfactura(int codigo){
         boolean existe = true;
         try {
-            System.out.println(" ");
             existeLfactura.setInt(1, codigo);
             ResultSet rs = existeLfactura.executeQuery();
+            if (rs.first() == true){
+                existe = true;
+            }else{
+                existe = false;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
+
+    public boolean existeFactura(int codigo){
+        boolean existe = true;
+        try {
+            existeFactura.setInt(1, codigo);
+            ResultSet rs = existeFactura.executeQuery();
             if (rs.first() == true){
                 existe = true;
             }else{
@@ -112,7 +144,6 @@ public class BDController {
     public boolean existeProducto(int cod_prod){
         boolean existe = true;
         try {
-            System.out.print("");
             existeProducto.setInt(1, cod_prod);
             ResultSet rs = existeProducto.executeQuery();
             if (rs.first() == true){
