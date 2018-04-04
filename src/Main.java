@@ -6,6 +6,7 @@ public class Main {
     int opcion;
     ClienteController clienteController = new ClienteController();
     ProductoController productoController = new ProductoController();
+    FacturaController facturaController = new FacturaController();
         do {
             mostrarMenu();
             opcion = sn.nextInt();
@@ -17,7 +18,7 @@ public class Main {
                     productoController.altaProducto();
                     break;
                 case 3:
-
+                    facturaController.realizarVenta();
                     break;
                 case 4:
                     System.out.println("Has elegido salir");

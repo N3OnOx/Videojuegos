@@ -4,6 +4,7 @@ public class BDController {
     private Connection conexion;
     private PreparedStatement existeCliente;
     private PreparedStatement existeProducto;
+    private PreparedStatement existeLfactura;
     BDController(){
         try {
             this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
@@ -11,6 +12,8 @@ public class BDController {
             this.existeCliente = conexion.prepareStatement(SQLExisteCliente);
             String SQLExisteProducto = "SELECT * from productos where cod_prod = ?";
             this.existeProducto = conexion.prepareStatement(SQLExisteProducto);
+            String SQLExisteLfactura = "SELECT * from lfactura where cod_lfactura = ?";
+            this.existeLfactura = conexion.prepareStatement(SQLExisteLfactura);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -47,6 +50,48 @@ public class BDController {
         }
     }
 
+    public void realizarVenta(Factura factura){
+        String insert ="INSERT INTO facturas VALUES(\'" + factura.getCod_factura() + "\',\'" + factura.getCod_cli() + "\',\'" + factura.getFecha() + "\',\'" + factura.getImporte() + "\');";
+        try {
+            System.out.println("---");
+            Statement myStatement = this.conexion.createStatement();
+            myStatement.executeUpdate(insert);
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void insertarLFactura(LFactura lFactura){
+        String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";
+        try {
+            System.out.println("----");
+            Statement myStatement = this.conexion.createStatement();
+            myStatement.executeUpdate(insert);
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean existeLfactura(int codigo){
+        boolean existe = true;
+        try {
+            System.out.println(" ");
+            existeLfactura.setInt(1, codigo);
+            ResultSet rs = existeLfactura.executeQuery();
+            if (rs.first() == true){
+                existe = true;
+            }else{
+                existe = false;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
+
     public boolean existeCliente(int cod_cli){
         boolean existe = true;
         try {
@@ -63,6 +108,7 @@ public class BDController {
         }
         return existe;
     }
+
     public boolean existeProducto(int cod_prod){
         boolean existe = true;
         try {
