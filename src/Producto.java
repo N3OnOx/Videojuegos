@@ -1,12 +1,12 @@
 public class Producto {
     private int cod_prod;
     private String descripcion;
-    private int importe;
+    private double importe;
 
     public Producto() {
     }
 
-    public Producto(int cod_prod, String descripcion, int importe) {
+    public Producto(int cod_prod, String descripcion, double importe) {
         this.cod_prod = cod_prod;
         this.descripcion = descripcion;
         this.importe = importe;
@@ -28,11 +28,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public int getImporte() {
+    public double getImporte() {
         return importe;
     }
 
-    public void setImporte(int importe) {
+    public void setImporte(double importe) {
         this.importe = importe;
     }
 }
