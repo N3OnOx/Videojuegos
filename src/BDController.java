@@ -33,6 +33,7 @@ public class BDController {
         this.conexion = conexion;
     }
 
+
     public void altaCliente(Cliente cliente){
         String insert ="INSERT INTO clientes VALUES('" + cliente.getCod_cli() + "','" + cliente.getNombre() + "','" + cliente.getDireccion() + "','" + cliente.getTelefono() + "','" + cliente.getNif() + "');";
         try {
@@ -167,6 +168,9 @@ public class BDController {
             e.printStackTrace();
         }
     }
+
+
+
 
     public boolean existeLfactura(int codigo){
         boolean existe = true;

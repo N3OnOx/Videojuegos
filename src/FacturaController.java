@@ -116,10 +116,11 @@ public class FacturaController {
         System.out.println("Dime el código de cliente: ");
         codCliente = sn.nextInt();
         if (facturacontroller.existeCliente(codCliente)){
+            System.out.println("Facturas del cliente: "+facturacontroller.buscarClienteN(codCliente));
+            System.out.println("Numero de facturas: "+facturacontroller.buscarFacturaC(codCliente).size());
+            System.out.println();
             for (Factura factura : facturacontroller.buscarFacturaC(codCliente)) {
-                System.out.println("Número de factura: "+factura.getCod_factura()+"\t Fecha: "+factura.getFecha());
-                int codigo = factura.getCod_cli();
-                System.out.println("Cliente: "+facturacontroller.buscarClienteN(codigo));
+                System.out.println("Número de factura: "+factura.getCod_factura()+"\t Fecha de compra: "+factura.getFecha());
                 System.out.println("------------------------------------------");
                 for (LFactura lfactura : facturacontroller.buscarLfacturaN(factura.getCod_factura())) {
                     int codProd = lfactura.getCod_prod();
