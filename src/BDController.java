@@ -8,8 +8,8 @@ public class BDController {
     private PreparedStatement existeFactura;
     BDController(){
         try {
-            //this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
-            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/videojuegos", "root","");
+            this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
+            //this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/videojuegos", "root","");
             String SQLExisteCliente = "SELECT * from clientes where cod_cli = ?";
             this.existeCliente = conexion.prepareStatement(SQLExisteCliente);
             String SQLExisteProducto = "SELECT * from productos where cod_prod = ?";
@@ -80,7 +80,7 @@ public class BDController {
     }
 
     public void insertarLFactura(LFactura lFactura){
-        String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getCod_prod() + "\',\'" + lFactura.getImporte() + "\');";
+        String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";
         try {
             Statement myStatement = this.conexion.createStatement();
             myStatement.executeUpdate(insert);

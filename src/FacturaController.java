@@ -47,8 +47,6 @@ public class FacturaController {
                     }
                     if (checkCodLF) {
                         lFactura.setCod_lfactura(codigo);
-                        //System.out.println("Dime el importe: ");
-                        //lFactura.setImporte(sn.nextInt());
                         codigo = facturacontroller.buscarImporte(lFactura.getCod_prod());
                         lFactura.setImporte(codigo);
                         lineas.add(lFactura);
@@ -63,6 +61,7 @@ public class FacturaController {
                 System.out.println("Desea introducir mas productos?");
                 resp = sc.nextLine();
             } while (resp.equalsIgnoreCase("si"));
+
             if (contProductos > 0) {
                 Factura factura = new Factura();
                 factura.setCod_factura(codFactura);
