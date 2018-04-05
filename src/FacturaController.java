@@ -86,4 +86,50 @@ public class FacturaController {
             System.out.println("Ya existe ese código de factura");
         }
     }
+
+    public void buscarFacturaN(){
+        Scanner sn = new Scanner(System.in);
+        int codigoFact;
+        System.out.println("Dime el código de factura a buscar: ");
+        codigoFact = sn.nextInt();
+        if (facturacontroller.existeFactura(codigoFact)){
+            for (Factura factura : facturacontroller.buscarFacturaN(codigoFact)) {
+                System.out.println("Número de factura: "+factura.getCod_factura()+"\t Fecha: "+factura.getFecha());
+                int codigo = factura.getCod_cli();
+                System.out.println("Cliente: "+facturacontroller.buscarClienteN(codigo));
+                System.out.println("-----------------------------------------");
+                for (LFactura lfactura : facturacontroller.buscarLfacturaN(codigoFact)) {
+                    int codProd = lfactura.getCod_prod();
+                    System.out.println(facturacontroller.buscarNombreProd(codProd) + " - " + lfactura.getImporte());
+                }
+                System.out.println("TOTAL FACTURA: "+factura.getImporte()+" euros");
+                System.out.println();
+            }
+        }else{
+            System.out.println("No existe ninguna factura con ese código");
+        }
+    }
+
+    public void mostrarFacturasCliente(){
+        Scanner sn = new Scanner(System.in);
+        int codCliente;
+        System.out.println("Dime el código de cliente: ");
+        codCliente = sn.nextInt();
+        if (facturacontroller.existeCliente(codCliente)){
+            for (Factura factura : facturacontroller.buscarFacturaC(codCliente)) {
+                System.out.println("Número de factura: "+factura.getCod_factura()+"\t Fecha: "+factura.getFecha());
+                int codigo = factura.getCod_cli();
+                System.out.println("Cliente: "+facturacontroller.buscarClienteN(codigo));
+                System.out.println("------------------------------------------");
+                for (LFactura lfactura : facturacontroller.buscarLfacturaN(factura.getCod_factura())) {
+                    int codProd = lfactura.getCod_prod();
+                    System.out.println(facturacontroller.buscarNombreProd(codProd) + " - " + lfactura.getImporte());
+                }
+                System.out.println("TOTAL FACTURA: "+factura.getImporte()+" euros");
+                System.out.println();
+            }
+        }else{
+            System.out.println("No existe ese cliente");
+        }
+    }
 }

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class BDController {
     private Connection conexion;
@@ -66,6 +67,54 @@ public class BDController {
         }
     }
 
+    public ArrayList<Factura> buscarFacturaN(int codigo){
+        String sql="select * from facturas where cod_factura = "+codigo+"";
+        ArrayList<Factura> facturas = new ArrayList<>();
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return facturas;
+    }
+
+    public ArrayList<LFactura> buscarLfacturaN(int codigo){
+        String sql="select * from lfactura where cod_factura = "+codigo+"";
+        ArrayList<LFactura> lfacturas = new ArrayList<>();
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                lfacturas.add(new LFactura(rs.getInt("cod_lfactura"),rs.getInt("cod_factura"),rs.getInt("importe"),rs.getInt("cod_prod")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return lfacturas;
+    }
+
+    public ArrayList<Factura> buscarFacturaC(int codigo){
+        String sql="select * from facturas where cod_cli = "+codigo+"";
+        ArrayList<Factura> facturas = new ArrayList<>();
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return facturas;
+    }
+
     public int buscarImporte(int codigo){
         int importe = 0;
         try {
@@ -78,6 +127,34 @@ public class BDController {
             System.out.println(e.getMessage());
         }
         return importe;
+    }
+
+    public String buscarClienteN(int codigo){
+        String nombreCliente = "";
+        try {
+            Statement miStatement = this.conexion.createStatement();
+            ResultSet rs = miStatement.executeQuery("SELECT nombre FROM clientes where cod_cli=" + codigo + "");
+            while (rs.next()){
+                nombreCliente = rs.getString(1);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return nombreCliente;
+    }
+
+    public String buscarNombreProd(int codProd){
+        String nombreProd = "";
+        try {
+            Statement miStatement = this.conexion.createStatement();
+            ResultSet rs = miStatement.executeQuery("SELECT descripcion FROM productos where cod_prod=" + codProd + "");
+            while (rs.next()){
+                nombreProd = rs.getString(1);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return nombreProd;
     }
 
     public void insertarLFactura(LFactura lFactura){

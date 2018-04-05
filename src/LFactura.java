@@ -1,17 +1,17 @@
 public class LFactura {
-    private int cod_factura;
     private int cod_lfactura;
-    private int cod_prod;
+    private int cod_factura;
     private int importe;
+    private int cod_prod;
 
     public LFactura() {
     }
 
-    public LFactura(int cod_factura, int cod_lfactura, int cod_prod, int importe) {
-        this.cod_factura = cod_factura;
-        this.cod_lfactura = cod_lfactura;
-        this.cod_prod = cod_prod;
+    public LFactura(int cod_lfactura, int cod_factura, int importe, int cod_prod) {
+        this.cod_lfactura = cod_factura;
+        this.cod_factura = cod_lfactura;
         this.importe = importe;
+        this.cod_prod = cod_prod;
     }
 
     public int getCod_factura() {
