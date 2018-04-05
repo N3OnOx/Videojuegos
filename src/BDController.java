@@ -6,10 +6,11 @@ public class BDController {
     private PreparedStatement existeProducto;
     private PreparedStatement existeLfactura;
     private PreparedStatement existeFactura;
+
     BDController(){
         try {
-            this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
-            //this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/videojuegos", "root","");
+            //this.conexion = DriverManager.getConnection("jdbc:mysql://192.168.10.252:3306/videojuegos", "1GS","Nelson2000");
+            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/videojuegos", "root","");
             String SQLExisteCliente = "SELECT * from clientes where cod_cli = ?";
             this.existeCliente = conexion.prepareStatement(SQLExisteCliente);
             String SQLExisteProducto = "SELECT * from productos where cod_prod = ?";
