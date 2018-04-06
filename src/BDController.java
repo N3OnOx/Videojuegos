@@ -7,6 +7,7 @@ public class BDController {
     private PreparedStatement existeProducto;
     private PreparedStatement existeLfactura;
     private PreparedStatement existeFactura;
+    private PreparedStatement existeAnnoFactura;
 
     BDController(){
         try {
@@ -20,6 +21,8 @@ public class BDController {
             this.existeLfactura = conexion.prepareStatement(SQLExisteLfactura);
             String SQLExisteFactura = "SELECT * from facturas where cod_factura = ?";
             this.existeFactura = conexion.prepareStatement(SQLExisteFactura);
+            String SQLExisteAnnoFactura = "select * from facturas where fecha LIKE ?";
+            this.existeAnnoFactura = conexion.prepareStatement(SQLExisteAnnoFactura);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -252,6 +255,23 @@ public class BDController {
         try {
             existeProducto.setInt(1, cod_prod);
             ResultSet rs = existeProducto.executeQuery();
+            if (rs.first() == true){
+                existe = true;
+            }else{
+                existe = false;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
+
+    public boolean existeAnnoFactura(String anno){
+        boolean existe = true;
+        try {
+            existeAnnoFactura.setString(1, "%"+anno);
+            ResultSet rs = existeAnnoFactura.executeQuery();
             if (rs.first() == true){
                 existe = true;
             }else{

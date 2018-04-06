@@ -159,10 +159,14 @@ public class FacturaController {
         int codFactura;
         System.out.println("Dime el año de la factura");
         anno = sc.nextLine();
-        for (Factura factura : facturacontroller.mostrarFacturasAnno(anno)) {
-            importe = factura.getImporte() - 10;
-            codFactura = factura.getCod_factura();
-            this.facturacontroller.actualizarFactura(importe,codFactura);
+        if (facturacontroller.existeAnnoFactura(anno)) {
+            for (Factura factura : facturacontroller.mostrarFacturasAnno(anno)) {
+                importe = factura.getImporte() - 10;
+                codFactura = factura.getCod_factura();
+                this.facturacontroller.actualizarFactura(importe, codFactura);
+            }
+        }else{
+            System.out.println("No existe ninguna factura con ese año");
         }
     }
 }
