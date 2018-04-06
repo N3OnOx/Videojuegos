@@ -133,4 +133,36 @@ public class FacturaController {
             System.out.println("No existe ese cliente");
         }
     }
+
+    public void realizarDescuentoC(){
+        Scanner sn = new Scanner(System.in);
+        int codCliente;
+        int importe;
+        int codFactura;
+        System.out.println("Dime el codigo del cliente");
+        codCliente = sn.nextInt();
+        if (facturacontroller.existeCliente(codCliente)){
+            for (Factura factura : facturacontroller.buscarFacturaC(codCliente)) {
+                importe = factura.getImporte() - 10;
+                codFactura = factura.getCod_factura();
+                this.facturacontroller.actualizarFactura(importe,codFactura);
+            }
+        }else{
+            System.out.println("No existe ningun cliente con ese codigo");
+        }
+    }
+
+    public void realizarDescuentoF(){
+        Scanner sc = new Scanner(System.in);
+        String anno;
+        int importe;
+        int codFactura;
+        System.out.println("Dime el año de la factura");
+        anno = sc.nextLine();
+        for (Factura factura : facturacontroller.mostrarFacturasAnno(anno)) {
+            importe = factura.getImporte() - 10;
+            codFactura = factura.getCod_factura();
+            this.facturacontroller.actualizarFactura(importe,codFactura);
+        }
+    }
 }

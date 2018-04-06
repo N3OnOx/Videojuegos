@@ -169,8 +169,32 @@ public class BDController {
         }
     }
 
+    public void actualizarFactura(int importe, int codFactura){
+        String insert ="UPDATE facturas set importe = "+importe+" where cod_factura = "+codFactura+";";
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            myStatement.executeUpdate(insert);
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
-
+    public ArrayList<Factura> mostrarFacturasAnno(String anno){
+        ArrayList<Factura> facturasAnno = new ArrayList<>();
+        String sql = "select * from facturas where fecha LIKE '%"+anno+"'";
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                facturasAnno.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return facturasAnno;
+    }
 
     public boolean existeLfactura(int codigo){
         boolean existe = true;
