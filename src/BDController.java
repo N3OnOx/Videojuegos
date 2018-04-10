@@ -8,6 +8,7 @@ public class BDController {
     private PreparedStatement existeLfactura;
     private PreparedStatement existeFactura;
     private PreparedStatement existeAnnoFactura;
+    private PreparedStatement existeFacturaC;
 
     BDController(){
         try {
@@ -23,6 +24,8 @@ public class BDController {
             this.existeFactura = conexion.prepareStatement(SQLExisteFactura);
             String SQLExisteAnnoFactura = "select * from facturas where fecha LIKE ?";
             this.existeAnnoFactura = conexion.prepareStatement(SQLExisteAnnoFactura);
+            String SQLExisteFacturaC = "SELECT * from facturas where cod_cli = ?";
+            this.existeFacturaC = conexion.prepareStatement(SQLExisteFacturaC);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -35,7 +38,6 @@ public class BDController {
     public void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
-
 
     public void altaCliente(Cliente cliente){
         String insert ="INSERT INTO clientes VALUES('" + cliente.getCod_cli() + "','" + cliente.getNombre() + "','" + cliente.getDireccion() + "','" + cliente.getTelefono() + "','" + cliente.getNif() + "');";
@@ -161,6 +163,23 @@ public class BDController {
         return nombreProd;
     }
 
+    public void eliminarCliente(int codCliente){
+        String cliente = "delete c, f, l from clientes as c inner join facturas as f on c.cod_cli = f.cod_cli inner join lfactura as l on l.cod_factura = f.cod_factura where c.cod_cli = "+codCliente+"";
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            if (!existeFacturaC(codCliente)){
+                myStatement.executeUpdate("delete from clientes where cod_cli = "+codCliente+";");
+            }else{
+                myStatement.executeUpdate(cliente);
+            }
+
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
     public void insertarLFactura(LFactura lFactura){
         String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";
         try {
@@ -272,6 +291,22 @@ public class BDController {
         try {
             existeAnnoFactura.setString(1, "%"+anno);
             ResultSet rs = existeAnnoFactura.executeQuery();
+            if (rs.first() == true){
+                existe = true;
+            }else{
+                existe = false;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
+    public boolean existeFacturaC(int codCliente){
+        boolean existe = true;
+        try {
+            existeFacturaC.setInt(1, codCliente);
+            ResultSet rs = existeFacturaC.executeQuery();
             if (rs.first() == true){
                 existe = true;
             }else{

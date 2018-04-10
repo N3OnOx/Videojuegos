@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClienteController {
@@ -36,6 +35,18 @@ public class ClienteController {
             this.clientecontroler.altaCliente(cliente);
         }else{
             System.out.println("Ya existe un cliente con ese codigo");
+        }
+    }
+
+    public void eliminarCliente(){
+        Scanner sn = new Scanner(System.in);
+        int codCliente;
+        System.out.println("Dime el cliente a eliminar");
+        codCliente = sn.nextInt();
+        if (clientecontroler.existeCliente(codCliente)){
+            clientecontroler.eliminarCliente(codCliente);
+        }else{
+            System.out.println("No existe ese cliente");
         }
     }
 }
