@@ -179,6 +179,22 @@ public class BDController {
         }
     }
 
+    public ArrayList<Factura> buscarFacturaProd(int codProd){
+        String sql="select * from facturas inner join lfactura on facturas.cod_factura = lfactura.cod_factura where lfactura.cod_prod = "+codProd+" group by facturas.cod_factura";
+        ArrayList<Factura> facturas = new ArrayList<>();
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return facturas;
+    }
+
 
     public void insertarLFactura(LFactura lFactura){
         String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";

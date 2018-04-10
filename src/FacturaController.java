@@ -169,4 +169,26 @@ public class FacturaController {
             System.out.println("No existe ninguna factura con ese año");
         }
     }
+
+    public void mostrarFacturasP(){
+        Scanner sn = new Scanner(System.in);
+        int codProd;
+        System.out.println("Dime el codigo de producto");
+        codProd = sn.nextInt();
+        if (facturacontroller.existeProducto(codProd)){
+            for (Factura factura : facturacontroller.buscarFacturaProd(codProd)) {
+                System.out.println("Número de factura: "+factura.getCod_factura()+"\t Fecha: "+factura.getFecha().substring(0,2)+"/"+factura.getFecha().substring(2,4)+"/"+factura.getFecha().substring(4,factura.getFecha().length()));
+                int codigo = factura.getCod_cli();
+                System.out.println("Cliente: "+facturacontroller.buscarClienteN(codigo));
+                System.out.println("-----------------------------------------");
+                for (LFactura lfactura : facturacontroller.buscarLfacturaN(factura.getCod_factura())) {
+                    System.out.println(facturacontroller.buscarNombreProd(codProd) + " - " + lfactura.getImporte());
+                }
+                System.out.println("TOTAL FACTURA: "+factura.getImporte()+" euros");
+                System.out.println();
+            }
+        }else{
+            System.out.println("No existe el codigo de producto");
+        }
+    }
 }

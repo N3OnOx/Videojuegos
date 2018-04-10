@@ -36,13 +36,16 @@ public class Main {
                     clienteController.eliminarCliente();
                     break;
                 case 9:
+                    facturaController.mostrarFacturasP();
+                    break;
+                case 10:
                     System.out.println("Has elegido salir");
                     break;
                     default:
                         System.out.println("Opción inválida");
                         break;
             }
-        }while (opcion!=9);
+        }while (opcion!=10);
     }
     private static void mostrarMenu(){
         System.out.println("1.  Crear nuevo cliente");
@@ -54,5 +57,6 @@ public class Main {
         System.out.println("7.  Aplicar un descuento de 10€ en todas las facturas que se hayan emitido en un año pedido por el usuario.");
         System.out.println("8.  Eliminar un cliente");
         System.out.println("9.  Salir");
+        System.out.println("10.  Salir");
     }
 }
