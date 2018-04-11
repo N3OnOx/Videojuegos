@@ -56,7 +56,7 @@ public class Main {
         System.out.println("6.  Aplicar descuento de 10€ a facturas de cliente.");
         System.out.println("7.  Aplicar un descuento de 10€ en todas las facturas que se hayan emitido en un año pedido por el usuario.");
         System.out.println("8.  Eliminar un cliente");
-        System.out.println("9.  Salir");
+        System.out.println("9.  Mostrar facturas por codigo de producto");
         System.out.println("10.  Salir");
     }
 }
