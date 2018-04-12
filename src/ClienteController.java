@@ -7,14 +7,6 @@ public class ClienteController {
         this.clientecontroler = new BDController();
     }
 
-    public BDController getClientecontroler() {
-        return clientecontroler;
-    }
-
-    public void setClientecontroler(BDController clientecontroler) {
-        this.clientecontroler = clientecontroler;
-    }
-
     public void altaCliente(){
         Scanner sc = new Scanner(System.in);
         Scanner sn = new Scanner(System.in);

@@ -8,14 +8,6 @@ public class FacturaController {
         this.facturacontroller = new BDController();
     }
 
-    public BDController getFacturacontroller() {
-        return facturacontroller;
-    }
-
-    public void setFacturacontroller(BDController facturacontroller) {
-        this.facturacontroller = facturacontroller;
-    }
-
     public void realizarVenta(){
         Scanner sn = new Scanner(System.in);
         Scanner sc = new Scanner(System.in);
@@ -189,6 +181,43 @@ public class FacturaController {
             }
         }else{
             System.out.println("No existe el codigo de producto");
+        }
+    }
+
+    public void mostrarFacturas2LF(){
+        if (facturacontroller.mostrarFacturas2LF().size() == 0){
+            System.out.println("No hay facturas con dos o mas lineas de factura");
+        }else {
+            for (Factura factura : facturacontroller.mostrarFacturas2LF()) {
+                System.out.println("Número de factura: " + factura.getCod_factura() + "    Fecha: " + factura.getFecha().substring(0, 2) + "/" + factura.getFecha().substring(2, 4) + "/" + factura.getFecha().substring(4, factura.getFecha().length()));
+                int codigo = factura.getCod_cli();
+                System.out.println("Cliente: " + facturacontroller.buscarClienteN(codigo));
+                System.out.println("-----------------------------------------");
+                for (LFactura lfactura : facturacontroller.buscarLfacturaN(factura.getCod_factura())) {
+                    System.out.println(facturacontroller.buscarNombreProd(lfactura.getCod_prod()) + " - " + lfactura.getImporte());
+                }
+                System.out.println("TOTAL FACTURA: " + factura.getImporte() + " euros");
+                System.out.println();
+            }
+        }
+    }
+
+    public void modificarFacturas(){
+        Scanner sn = new Scanner(System.in);
+        int codCli1;
+        int codCli2;
+        System.out.println("Dime el código del cliente 1: ");
+        codCli1 = sn.nextInt();
+        if (facturacontroller.existeCliente(codCli1)){
+            System.out.println("Dime el código del cliente 2: ");
+            codCli2 = sn.nextInt();
+            if (facturacontroller.existeCliente(codCli2)){
+                this.facturacontroller.actualizarFacturaClientes(codCli2,codCli1);
+            }else{
+                System.out.println("No existe el cliente 2.");
+            }
+        }else{
+            System.out.println("No existe el cliente 1.");
         }
     }
 }

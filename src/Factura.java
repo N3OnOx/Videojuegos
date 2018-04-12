@@ -5,19 +5,10 @@ public class Factura {
     private int cod_cli;
     private String fecha;
     private int importe;
-    private ArrayList<LFactura> lineas = new ArrayList<>();
-    private String nombreCliente;
 
     public Factura() {
     }
 
-    public Factura(int cod_factura, int cod_cli, String fecha, int importe, ArrayList<LFactura> lineas) {
-        this.cod_factura = cod_factura;
-        this.cod_cli = cod_cli;
-        this.fecha = fecha;
-        this.importe = importe;
-        this.lineas = lineas;
-    }
     public Factura(int cod_factura, int cod_cli, String fecha, int importe) {
         this.cod_factura = cod_factura;
         this.cod_cli = cod_cli;
@@ -55,13 +46,5 @@ public class Factura {
 
     public void setImporte(int importe) {
         this.importe = importe;
-    }
-
-    public ArrayList<LFactura> getFacturas() {
-        return lineas;
-    }
-
-    public void setFacturas(ArrayList<LFactura> lineas) {
-        this.lineas = lineas;
     }
 }

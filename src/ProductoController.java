@@ -7,14 +7,6 @@ public class ProductoController {
         this.productocontroler = new BDController();
     }
 
-    public BDController getProductocontroler() {
-        return productocontroler;
-    }
-
-    public void setProductocontroler(BDController productocontroler) {
-        this.productocontroler = productocontroler;
-    }
-
     public void altaProducto(){
         Scanner sc = new Scanner(System.in);
         Scanner sn = new Scanner(System.in);

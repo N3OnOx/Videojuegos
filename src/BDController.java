@@ -31,14 +31,6 @@ public class BDController {
         }
     }
 
-    public Connection getConexion() {
-        return conexion;
-    }
-
-    public void setConexion(Connection conexion) {
-        this.conexion = conexion;
-    }
-
     public void altaCliente(Cliente cliente){
         String insert ="INSERT INTO clientes VALUES('" + cliente.getCod_cli() + "','" + cliente.getNombre() + "','" + cliente.getDireccion() + "','" + cliente.getTelefono() + "','" + cliente.getNif() + "');";
         try {
@@ -49,7 +41,6 @@ public class BDController {
             e.printStackTrace();
         }
     }
-
     public void altaProducto(Producto producto){
         String insert ="INSERT INTO productos VALUES('" + producto.getCod_prod() + "','" + producto.getDescripcion() + "','" + producto.getImporte() + "');";
         try {
@@ -61,7 +52,6 @@ public class BDController {
             e.printStackTrace();
         }
     }
-
     public void realizarVenta(Factura factura){
         String insert ="INSERT INTO facturas VALUES(\'" + factura.getCod_factura() + "\',\'" + factura.getCod_cli() + "\',\'" + factura.getFecha() + "\',\'" + factura.getImporte() + "\');";
         try {
@@ -88,7 +78,6 @@ public class BDController {
         }
         return facturas;
     }
-
     public ArrayList<LFactura> buscarLfacturaN(int codigo){
         String sql="select * from lfactura where cod_factura = "+codigo+"";
         ArrayList<LFactura> lfacturas = new ArrayList<>();
@@ -104,7 +93,6 @@ public class BDController {
         }
         return lfacturas;
     }
-
     public ArrayList<Factura> buscarFacturaC(int codigo){
         String sql="select * from facturas where cod_cli = "+codigo+"";
         ArrayList<Factura> facturas = new ArrayList<>();
@@ -120,7 +108,21 @@ public class BDController {
         }
         return facturas;
     }
-
+    public ArrayList<Factura> buscarFacturaProd(int codProd){
+        String sql="select * from facturas inner join lfactura on facturas.cod_factura = lfactura.cod_factura where lfactura.cod_prod = "+codProd+" group by facturas.cod_factura";
+        ArrayList<Factura> facturas = new ArrayList<>();
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            ResultSet rs = myStatement.executeQuery(sql);
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return facturas;
+    }
     public int buscarImporte(int codigo){
         int importe = 0;
         try {
@@ -134,7 +136,6 @@ public class BDController {
         }
         return importe;
     }
-
     public String buscarClienteN(int codigo){
         String nombreCliente = "";
         try {
@@ -148,7 +149,6 @@ public class BDController {
         }
         return nombreCliente;
     }
-
     public String buscarNombreProd(int codProd){
         String nombreProd = "";
         try {
@@ -178,24 +178,6 @@ public class BDController {
             e.printStackTrace();
         }
     }
-
-    public ArrayList<Factura> buscarFacturaProd(int codProd){
-        String sql="select * from facturas inner join lfactura on facturas.cod_factura = lfactura.cod_factura where lfactura.cod_prod = "+codProd+" group by facturas.cod_factura";
-        ArrayList<Factura> facturas = new ArrayList<>();
-        try {
-            Statement myStatement = this.conexion.createStatement();
-            ResultSet rs = myStatement.executeQuery(sql);
-            while (rs.next()){
-                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
-            }
-            myStatement.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return facturas;
-    }
-
-
     public void insertarLFactura(LFactura lFactura){
         String insert ="INSERT INTO lfactura VALUES(\'" + lFactura.getCod_lfactura() + "\',\'" + lFactura.getCod_factura() + "\',\'" + lFactura.getImporte() + "\',\'" + lFactura.getCod_prod() + "\');";
         try {
@@ -206,7 +188,6 @@ public class BDController {
             e.printStackTrace();
         }
     }
-
     public void actualizarFactura(int importe, int codFactura){
         String insert ="UPDATE facturas set importe = "+importe+" where cod_factura = "+codFactura+";";
         try {
@@ -217,7 +198,16 @@ public class BDController {
             e.printStackTrace();
         }
     }
-
+    public void actualizarFacturaClientes(int codCli2, int codCli1){
+        String insert ="UPDATE facturas set cod_cli = "+codCli2+" where cod_cli = "+codCli1+";";
+        try {
+            Statement myStatement = this.conexion.createStatement();
+            myStatement.executeUpdate(insert);
+            myStatement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Factura> mostrarFacturasAnno(String anno){
         ArrayList<Factura> facturasAnno = new ArrayList<>();
         String sql = "select * from facturas where fecha LIKE '%"+anno+"'";
@@ -232,6 +222,21 @@ public class BDController {
             e.printStackTrace();
         }
         return facturasAnno;
+    }
+    public ArrayList<Factura> mostrarFacturas2LF(){
+        ArrayList<Factura> facturas = new ArrayList<>();
+        String sql = "select * from facturas inner join lfactura on facturas.cod_factura = lfactura.cod_factura where lfactura.cod_factura in (select lfactura.cod_factura from lfactura group by lfactura.cod_factura having count(lfactura.cod_lfactura) >= 2) group by facturas.cod_factura;";
+        try {
+            Statement ms = conexion.createStatement();
+            ResultSet rs = ms.executeQuery(sql);
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("cod_factura"),rs.getInt("cod_cli"),rs.getString("fecha"),rs.getInt("importe")));
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.out.println("Error: "+e.getMessage());
+        }
+        return facturas;
     }
 
     public boolean existeLfactura(int codigo){
@@ -250,7 +255,6 @@ public class BDController {
         }
         return existe;
     }
-
     public boolean existeFactura(int codigo){
         boolean existe = true;
         try {
@@ -267,7 +271,6 @@ public class BDController {
         }
         return existe;
     }
-
     public boolean existeCliente(int cod_cli){
         boolean existe = true;
         try {
@@ -284,7 +287,6 @@ public class BDController {
         }
         return existe;
     }
-
     public boolean existeProducto(int cod_prod){
         boolean existe = true;
         try {
@@ -301,7 +303,6 @@ public class BDController {
         }
         return existe;
     }
-
     public boolean existeAnnoFactura(String anno){
         boolean existe = true;
         try {
